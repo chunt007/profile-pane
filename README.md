@@ -41,7 +41,9 @@ npm start
 Visit `http://localhost:8080/` to render the pane. Adjust `const webIdToShow` in `./dev/index.ts` to show a
  different profile.
 
-Once you have given the proper write/read permissions between your localhost and the pod provider of your choice, you don't have to click "Log In" under "pane under development" everytime you test new features. It should write to your pod in real time anytime you make changes to your solid provider profile. This will save you a lot of time and energy.
+Once you have given the proper write/read permissions between your 'localhost:8080' and the pod provider of your choice, you don't have to click "Log In" under "pane under development" everytime you test new features. Anytime you are already logged into your account and edit your server side profile, example being "https://chunt.solidweb.org/profile/card#me" those changes will also render on the profile-pane dev server once you hit refresh. 
+
+Whenever you use a source-code editor like VSCode, you simply save any changes on your end and that will reflect in real time on the profile-pane dev server.
  
 ### Build
 
