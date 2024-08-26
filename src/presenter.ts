@@ -1,7 +1,7 @@
 import { NamedNode, LiveStore } from "rdflib";
 import { ns, utils, widgets } from "solid-ui";
 import { store } from "solid-logic";
-import Node from "rdflib/src/node-internal";
+import { Node } from "rdflib";
 import { validateHTMLColorHex } from "validate-color";
 
 export interface ProfilePresentation {
@@ -13,6 +13,8 @@ export interface ProfilePresentation {
   pronouns?: string;
   backgroundColor: string;
   highlightColor: string;
+  cornerSquareColor: string;
+  cornerDotColor: string;
 }
 
 export function pronounsAsText (subject:NamedNode): string {
@@ -49,7 +51,7 @@ export const presentProfile = (
     address != null
       ? store.anyValue(address as NamedNode, ns.vcard("locality"))
       : null;
-  const { backgroundColor, highlightColor } = getColors(subject, store);
+  const { backgroundColor, highlightColor, cornerSquareColor, cornerDotColor } = getColors(subject, store);
   const pronouns = pronounsAsText(subject)
   return {
     name,
@@ -59,6 +61,8 @@ export const presentProfile = (
     backgroundColor,
     pronouns,
     highlightColor,
+    cornerSquareColor,
+    cornerDotColor
   };
 };
 
@@ -86,9 +90,26 @@ function getColors(subject: NamedNode, store: LiveStore) {
     null,
     subject.doc()
   );
+
+  const cornerSquareColor = store.anyValue(
+    subject,
+    ns.solid("cornerSquareColor"),
+    null,
+    subject.doc()
+  );
+
+  const cornerDotColor = store.anyValue(
+    subject,
+    ns.solid("cornerDotColor"),
+    null,
+    subject.doc()
+  );
+
   return {
     backgroundColor: validColorOrDefault(backgroundColor, "#eee"),
     highlightColor: validColorOrDefault(highlightColor, "#090"),
+    cornerSquareColor: validColorOrDefault(cornerSquareColor, "#600"),
+    cornerDotColor: validColorOrDefault(cornerDotColor, "#600")
   };
 }
 
