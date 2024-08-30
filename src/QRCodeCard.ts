@@ -1,4 +1,4 @@
-// A card in my profile to show you a QRCode of my webid
+// A card in my profile to show yu a QRCode of my webid
 //
 import { html, TemplateResult } from "lit-html";
 import { NamedNode } from 'rdflib'
@@ -12,9 +12,7 @@ import {
 } from "./baseStyles";
 import { ProfilePresentation } from "./presenter";
 import { styleMap } from "lit-html/directives/style-map.js";
-import { vCard } from "./vCard";
-
-
+import { utils } from "solid-ui";
 
 const styles = {
   image: styleMap(fullWidth()),
@@ -32,21 +30,32 @@ export const QRCodeCard = (
     // "text-decoration": "underline",
     color: profileBasics.highlightColor, // was "text-decoration-color"
   });
-  const qrCodeCanvasStyle = 'width: 82.5%; margin:auto;'
-  const profileHighlightColor  = profileBasics.highlightColor  || '#000000'
-  const cornerSquareColor = profileBasics.cornerSquareColor || '#000000'
-  const cornerDotColor = profileBasics.cornerDotColor || '#000000'
+  const qrCodeCanvasStyle = 'width: 80%; margin:auto;'
+  const highlightColor = profileBasics.highlightColor || '#000000'
   const backgroundColor = profileBasics.backgroundColor || '#ffffff'
+  // console.log(`@@ qrcodes colours highlightColor ${highlightColor}, backgroundColor ${backgroundColor}`)
 
-  
+  const name = utils.label(subject);
 
-  
+  const BEGIN:string = 'BEGIN:VCARD\r\n';
+  const END:string = 'END:VCARD\r\n';
+  const FN:string = 'FN:' + name + '\r\n';
+  const URL:string = 'URL:' + subject.uri + 'r\n';
+  const VERSIONV:string = 'VERSION:4.0\r\n';
+
+// find out how to import values from presenter.ts
+// once those values are imported, make sure any user input aligns
+
+
+  const vCard: string = BEGIN + FN + URL + END + VERSIONV;
+
+
   // console.log(`@@ qrcodes colours highlightColor ${highlightColor}, backgroundColor ${backgroundColor}`)
    
   return html`
     <div style=${styles.info}>
       <h3 style=${nameStyle}>${profileBasics.name}</h3>
-      <div class="QRCode" style="${qrCodeCanvasStyle}" data-value="${vCard}" backgroundColor="${backgroundColor}" highlightColor="${profileHighlightColor}" cornerSquareColor="${cornerSquareColor}" cornerDotColor="${cornerDotColor}""><div id="canvas"></div>
+      <div class="QRCode" style="${qrCodeCanvasStyle}" data-value="${vCard}" backgroundColor="${backgroundColor}" highlightColor="${highlightColor}"><div id="canvas"></div>
     </div>
   `;
 };
