@@ -419,6 +419,7 @@ WHERE
 
   :AccountIdField a ui:Options; ui:dependingOn rdf:type; ui:case
      [ ui:for soc:BlueSkyAccount; ui:use :BlueSkyIdField ],
+     [ ui:for soc:DiggAccount; ui:use :DiggIdField ],
      [ ui:for soc:FacebookAccount; ui:use :FacebookIdField ],
      [ ui:for soc:GithubAccount; ui:use :GithubIdField ],
      [ ui:for soc:InstagramAccount; ui:use :InstagramIdField ],
@@ -443,6 +444,14 @@ WHERE
       ui:maxLength "200" ;
       ui:property foaf:accountName ; 
       ui:pattern "@[a-z0-9A-Z_-](.[a-z0-9A-Z_-])*";  # @@
+      ui:size    40 .
+
+   :DiggIdField
+      a ui:SingleLineTextField ;
+      ui:label "Digg Id";
+      ui:maxLength "200" ;
+      ui:property foaf:accountName ; 
+      ui:pattern "[a-z0-9A-Z_-]*";  # @@
       ui:size    40 .
 
   :FacebookIdField
@@ -636,6 +645,12 @@ foaf:Account a rdfs:Class;
 
 :BlueSkyAccount rdfs:subClassOf foaf:Account ;
     rdfs:label "Bluesky";
+    foaf:userProfilePrefix "https://bsky.app/profile/";
+    foaf:icon <https://solidos.github.io/solid-ui/src/icons/social/bluesky-1.svg>;
+    foaf:homepage <https://bsky.app/> .
+
+:DiggAccount rdfs:subClassOf foaf:Account ;
+    rdfs:label "Digg";
     foaf:userProfilePrefix "https://bsky.app/profile/";
     foaf:icon <https://solidos.github.io/solid-ui/src/icons/social/bluesky-1.svg>;
     foaf:homepage <https://bsky.app/> .
